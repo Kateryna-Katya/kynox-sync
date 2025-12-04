@@ -799,3 +799,17 @@ ul {
         order: 2;
     }
 }
+.review-card__avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* Делает круг */
+    object-fit: cover;
+    /* Обрезает фото по центру, не искажая пропорции */
+    border: 2px solid var(--accent-primary);
+    /* Неоновая обводка */
+    background-color: var(--bg-secondary);
+    /* Цвет фона, если картинка не прогрузилась */
+    flex-shrink: 0;
+    /* Чтобы аватарка не сжималась, если текста много */
+}
