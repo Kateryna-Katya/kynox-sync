@@ -1,19 +1,25 @@
 <header class="header">
-  <div class="container">
-    <nav class="nav">
-      <a class="nav-logo" href="./index.html" aria-label="Site logo">
-        <svg class="nav-logo-icon" width="100" height="30">
-          <use href="{=$icon-path}"></use>
-        </svg>
-      </a>
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-act}" href="./page-2.html">Page 2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-curr}" href="./page-3.html">Page 3</a>
-        </li>
+  <div class="container header__container">
+    <a href="#" class="header__logo">
+      Kynox<span class="header__logo-accent">-Sync</span>
+    </a>
+
+    <nav class="header__nav" id="nav-menu">
+      <ul class="header__list">
+        <li class="header__item"><a href="#hero" class="header__link">Главная</a></li>
+        <li class="header__item"><a href="#about" class="header__link">О платформе</a></li>
+        <li class="header__item"><a href="#benefits" class="header__link">Возможности</a></li>
+        <li class="header__item"><a href="#innovations" class="header__link">Практика AI</a></li>
+        <li class="header__item"><a href="#reviews" class="header__link">Отзывы</a></li>
+        <li class="header__item"><a href="#quiz" class="header__link">Тест</a></li>
       </ul>
+      <a href="#contact" class="header__btn btn btn--small">Старт</a>
     </nav>
+
+    <button class="header__burger" id="burger-btn" aria-label="Меню">
+      <span class="header__burger-line"></span>
+      <span class="header__burger-line"></span>
+      <span class="header__burger-line"></span>
+    </button>
   </div>
 </header>
