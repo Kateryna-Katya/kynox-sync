@@ -52,7 +52,30 @@ burgerBtn.addEventListener('click', toggleMenu);
 });
 
 /* =========================================
-   3. АНИМАЦИЯ HERO (Входная)
+   3. COOKIE POPUP (НОВОЕ)
+   ========================================= */
+const cookiePopup = document.getElementById('cookie-popup');
+const cookieBtn = document.getElementById('cookie-btn');
+
+// Проверка: если в хранилище нет записи 'kynox_consent', показываем попап
+if (!localStorage.getItem('kynox_consent')) {
+    // Задержка 2 секунды перед появлением для плавности
+    setTimeout(() => {
+        cookiePopup.classList.add('is-active');
+    }, 2000);
+}
+
+if (cookieBtn) {
+    cookieBtn.addEventListener('click', () => {
+        // 1. Скрываем попап
+        cookiePopup.classList.remove('is-active');
+        // 2. Записываем согласие в localStorage
+        localStorage.setItem('kynox_consent', 'true');
+    });
+}
+
+/* =========================================
+   4. АНИМАЦИЯ HERO (Входная)
    ========================================= */
 
 const tlHero = gsap.timeline({ defaults: { ease: "power2.out", duration: 1 } });
@@ -66,7 +89,7 @@ tlHero.fromTo(".hero__img",
 .to(".hero__actions", { y: 0, opacity: 1 }, "-=0.8")
 .fromTo(".hero__status", { y: -20, opacity: 0 }, { y: 0, opacity: 1 }, "-=1.2");
 
-// Параллакс эффект для картинки
+// Параллакс эффект для картинки (только десктоп)
 const heroSection = document.getElementById('hero');
 const heroImg = document.querySelector('.hero__img');
 
@@ -79,35 +102,22 @@ if (heroSection && heroImg && window.innerWidth > 992) {
 }
 
 /* =========================================
-   4. УНИВЕРСАЛЬНАЯ АНИМАЦИЯ СКРОЛЛА
+   5. УНИВЕРСАЛЬНАЯ АНИМАЦИЯ СКРОЛЛА
    ========================================= */
 
-// Находим все элементы с атрибутом data-anim
 const animatedElements = gsap.utils.toArray('[data-anim]');
 
 animatedElements.forEach(el => {
-    // Определяем направление из атрибута (up, left, right)
     const direction = el.getAttribute('data-anim');
-    
     let xValue = 0;
     let yValue = 0;
 
-    // Настройка смещения в зависимости от направления
     if (direction === 'up') yValue = 50;
-    else if (direction === 'left') xValue = 50; // Приходит справа налево? Нет, обычно fade-left значит "сдвинут влево изначально" или "идет влево".
-    // Сделаем логичнее: 
-    // data-anim="left" -> Элемент находится справа и едет влево (для правой колонки)
-    // data-anim="right" -> Элемент находится слева и едет вправо (для левой колонки)
-    
-    if (direction === 'left') xValue = 50;  // Стоит правее, едет в 0
-    if (direction === 'right') xValue = -50; // Стоит левее, едет в 0
+    if (direction === 'left') xValue = 50; 
+    if (direction === 'right') xValue = -50;
 
     gsap.fromTo(el, 
-        { 
-            autoAlpha: 0, // opacity + visibility
-            y: yValue, 
-            x: xValue 
-        },
+        { autoAlpha: 0, y: yValue, x: xValue },
         { 
             duration: 1, 
             autoAlpha: 1, 
@@ -116,15 +126,15 @@ animatedElements.forEach(el => {
             ease: "power2.out",
             scrollTrigger: {
                 trigger: el,
-                start: "top 85%", // Анимация начнется, когда верх элемента на 85% высоты экрана
-                toggleActions: "play none none reverse" // Проиграть один раз, но если скролл вверх - реверс (по желанию можно "play none none none")
+                start: "top 85%",
+                toggleActions: "play none none reverse"
             }
         }
     );
 });
 
 /* =========================================
-   5. ФОРМА КОНТАКТОВ
+   6. ФОРМА КОНТАКТОВ
    ========================================= */
 
 const contactForm = document.getElementById('contact-form');
@@ -132,34 +142,30 @@ const phoneInput = document.getElementById('phone');
 const formMessage = document.getElementById('form-message');
 const captchaInput = document.getElementById('captcha');
 
-// 1. ВАЛИДАЦИЯ ТЕЛЕФОНА (Только цифры)
+// Валидация телефона (только цифры)
 if (phoneInput) {
     phoneInput.addEventListener('input', (e) => {
-        // Заменяем всё, что не цифра, на пустоту
         e.target.value = e.target.value.replace(/\D/g, '');
     });
 }
 
-// 2. ОТПРАВКА ФОРМЫ
+// Отправка формы
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Проверка капчи (3 + 5 = 8)
         if (captchaInput.value !== '8') {
             formMessage.textContent = 'Ошибка: Неверное решение примера.';
             formMessage.className = 'form-message error';
             return;
         }
 
-        // Имитация отправки
         const btn = contactForm.querySelector('button');
         const originalText = btn.textContent;
         
         btn.textContent = 'Отправка...';
         btn.disabled = true;
 
-        // Таймер AJAX
         setTimeout(() => {
             btn.textContent = 'Отправлено!';
             btn.style.backgroundColor = '#45A29E';
@@ -169,7 +175,6 @@ if (contactForm) {
             
             contactForm.reset();
             
-            // Возврат кнопки через 3 секунды
             setTimeout(() => {
                 btn.textContent = originalText;
                 btn.disabled = false;

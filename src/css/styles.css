@@ -363,6 +363,7 @@ ul {
         grid-template-columns: 1fr;
         text-align: center;
         padding-top: 20px;
+        padding-bottom: 100px;
     }
 
     .hero__content {
@@ -455,7 +456,7 @@ ul {
 
 .hero__scroll {
     position: absolute;
-    bottom: 30px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -812,4 +813,75 @@ ul {
     /* Цвет фона, если картинка не прогрузилась */
     flex-shrink: 0;
     /* Чтобы аватарка не сжималась, если текста много */
+}
+/* --- Cookie Popup --- */
+.cookie-popup {
+    position: fixed;
+    bottom: -150px;
+    /* Скрыт по умолчанию ниже экрана */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    background: rgba(11, 12, 16, 0.9);
+    /* Полупрозрачный фон */
+    backdrop-filter: blur(12px);
+    /* Эффект размытия стекла */
+    border: 1px solid var(--accent-primary);
+    border-radius: 12px;
+    padding: 20px 30px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: bottom 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cookie-popup.is-active {
+    bottom: 30px;
+    /* Показываем */
+}
+
+.cookie-popup__text {
+    font-size: 0.9rem;
+    color: var(--text-white);
+    margin: 0;
+}
+
+.cookie-popup__link {
+    color: var(--accent-primary);
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.cookie-popup__link:hover {
+    color: var(--text-white);
+}
+
+.cookie-popup__btn {
+    background: var(--accent-primary);
+    color: var(--bg-main);
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
+}
+
+.cookie-popup__btn:hover {
+    background: var(--text-white);
+}
+
+/* Мобильная адаптация */
+@media (max-width: 600px) {
+    .cookie-popup {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        padding: 20px;
+    }
+
+    .cookie-popup__btn {
+        width: 100%;
+    }
 }
